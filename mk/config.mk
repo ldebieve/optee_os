@@ -984,13 +984,13 @@ endif
 CFG_WDT ?= n
 
 # Enable watchdog SMC handling compatible with arm-smc-wdt Linux driver
-# When enabled, CFG_WDT_SM_HANDLER_ID must be defined with a SMC ID
+# When CFG_WDT_SM_HANDLER=y, SMC function ID 0xb2000014 implements
+# arm-smc-wdt service. Platform can also define an additional platform
+# specific SMC function ID to access arm-smc-wdt service thanks to optional
+# config switch CFG_WDT_SM_HANDLER_ID.
 CFG_WDT_SM_HANDLER ?= n
 
 $(eval $(call cfg-enable-all-depends,CFG_WDT_SM_HANDLER,CFG_WDT))
-ifeq (y-,$(CFG_WDT_SM_HANDLER)-$(CFG_WDT_SM_HANDLER_ID))
-$(error CFG_WDT_SM_HANDLER_ID must be defined when enabling CFG_WDT_SM_HANDLER)
-endif
 
 # Allow using the udelay/mdelay function for platforms without ARM generic timer
 # extension. When set to 'n', the plat_get_freq() function must be defined by
